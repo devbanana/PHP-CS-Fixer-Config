@@ -17,6 +17,6 @@ return Configurator::fromPhpVersion(PhpVersion::PHP_80())
     ->withAddedRules([
         'cast_spaces' => false,
     ])
-    ->configuration()
+    ->fixerConfig()
 ;
 ```
