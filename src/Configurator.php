@@ -18,47 +18,32 @@ use PhpCsFixer\Config;
 final class Configurator
 {
     private const RULES = [
-        '@Symfony' => true,
+        '@PhpCsFixer' => true,
         'align_multiline_comment' => [
             'comment_type' => 'all_multiline',
         ],
-        'array_indentation' => true,
         'blank_line_before_statement' => [
             'statements' => [
                 'case',
+                'continue',
                 'declare',
                 'default',
                 'do',
+                'exit',
                 'for',
                 'foreach',
-                'if',
+                'include',
+                'include_once',
+                'require',
+                'require_once',
                 'return',
                 'switch',
                 'throw',
                 'try',
                 'while',
-                'yield',
-                'yield_from',
             ],
         ],
         'concat_space' => ['spacing' => 'one'],
-        'escape_implicit_backslashes' => [
-            'single_quoted' => true,
-            'double_quoted' => true,
-            'heredoc_syntax' => true,
-        ],
-        'explicit_indirect_variable' => true,
-        'heredoc_to_nowdoc' => true,
-        'method_argument_space' => [
-            'on_multiline' => 'ensure_fully_multiline',
-        ],
-        'method_chaining_indentation' => true,
-        'multiline_whitespace_before_semicolons' => [
-            'strategy' => 'new_line_for_chained_calls',
-        ],
-        'no_superfluous_elseif' => true,
-        'no_useless_else' => true,
-        'no_useless_return' => true,
         'ordered_class_elements' => [
             'order' => [
                 'use_trait',
@@ -87,23 +72,15 @@ final class Configurator
                 'method_private',
             ],
         ],
+        'php_unit_test_class_requires_covers' => false,
+        'phpdoc_add_missing_param_annotation' => false,
         'phpdoc_line_span' => true,
-        'phpdoc_order' => true,
-        'phpdoc_order_by_value' => [
-            'annotations' => [
-                'covers',
-                'dataProvider',
-                'group',
-                'property',
-                'property-read',
-                'property-write',
-                'throws',
-            ],
+        'phpdoc_types_order' => [
+            'sort_algorithm' => 'none',
+            'null_adjustment' => 'always_last',
         ],
-        'return_assignment' => true,
         'self_static_accessor' => true,
         'simplified_if_return' => true,
-        'single_line_throw' => false,
         'yoda_style' => false,
     ];
 
@@ -111,17 +88,15 @@ final class Configurator
      * @var array<string, bool|mixed[]>
      */
     private const RISKY_RULES = [
-        '@Symfony:risky' => true,
+        '@PhpCsFixer:risky' => true,
         '@PHPUnit84Migration:risky' => true,
         'date_time_immutable' => true,
         'final_class' => true,
         'final_public_method_for_abstract_class' => true,
-        'php_unit_strict' => true,
         'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
         'psr_autoloading' => true,
+        'regular_callable_call' => true,
         'static_lambda' => true,
-        'strict_comparison' => true,
-        'strict_param' => true,
     ];
 
     /**
