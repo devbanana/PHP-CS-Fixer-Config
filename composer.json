@@ -1,0 +1,30 @@
+{
+    "name": "devbanana/php-cs-fixer-config",
+    "description": "Default rules for PHP CS Fixer",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brandon Olivares",
+            "email": "programmer2188@gmail.com",
+            "homepage": "https://www.possiblepromise.com"
+        }
+    ],
+    "require": {
+        "friendsofphp/php-cs-fixer": "^3.0"
+    },
+    "require-dev": {
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan": "^0.12.95",
+        "phpstan/phpstan-strict-rules": "^0.12.10",
+        "rector/rector": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "Devbanana\\FixerConfig\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
