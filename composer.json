@@ -11,7 +11,8 @@
         }
     ],
     "require": {
-        "friendsofphp/php-cs-fixer": "^3.0"
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "myclabs/php-enum": "^1.8"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.1",
