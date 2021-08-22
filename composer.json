@@ -11,8 +11,9 @@
         }
     ],
     "require": {
+        "php": "^7.2",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "myclabs/php-enum": "^1.8"
+        "myclabs/php-enum": "^1.7"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.1",
@@ -27,6 +28,9 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2"
+        }
     }
 }

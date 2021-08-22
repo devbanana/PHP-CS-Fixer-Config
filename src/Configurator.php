@@ -187,15 +187,27 @@ final class Configurator
     private const PHP80_MIGRATION_RISKY = [
         '@PHP80Migration:risky' => true,
     ];
+    /**
+     * @var array<string, bool|mixed[]>
+     */
+    private $rules = [];
+    /**
+     * @var PhpVersion
+     */
+    private $phpVersion;
+    /**
+     * @var bool
+     */
+    private $risky = false;
 
     /**
      * @param array<string, bool|mixed[]> $rules
      */
-    private function __construct(
-        private array $rules,
-        private PhpVersion $phpVersion,
-        private bool $risky = false
-    ) {
+    private function __construct(array $rules, PhpVersion $phpVersion, bool $risky = false)
+    {
+        $this->rules = $rules;
+        $this->phpVersion = $phpVersion;
+        $this->risky = $risky;
     }
 
     public static function fromPhpVersion(PhpVersion $phpVersion): self

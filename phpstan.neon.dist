@@ -3,6 +3,7 @@ includes:
 
 parameters:
     level: max
+    phpVersion: 70200
     checkExplicitMixed: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
     checkInternalClassCaseSensitivity: true

@@ -11,9 +11,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
+use Rector\CodingStyle\Rector\FuncCall\CallUserFuncArrayToVariadicRector;
 use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
 use Rector\Core\Configuration\Option;
+use Rector\Core\ValueObject\PhpVersion;
 use Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector;
+use Rector\Set\ValueObject\DowngradeSetList;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -29,25 +33,28 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::IMPORT_DOC_BLOCKS, true);
 
     $parameters->set(Option::SKIP, [
+        CallUserFuncArrayToVariadicRector::class,
         PrivatizeLocalGetterToPropertyRector::class,
+            RemoveUnusedPromotedPropertyRector::class,
         UnSpreadOperatorRector::class,
     ]);
 
     $services = $containerConfigurator->services();
 
     $containerConfigurator->import(SetList::CODING_STYLE);
-    $containerConfigurator->import(SetList::CODE_QUALITY);
-    $containerConfigurator->import(SetList::DEAD_CODE);
-    $containerConfigurator->import(SetList::PRIVATIZATION);
-    $containerConfigurator->import(SetList::PSR_4);
-    $containerConfigurator->import(SetList::TYPE_DECLARATION);
-    $containerConfigurator->import(SetList::TYPE_DECLARATION_STRICT);
-    $containerConfigurator->import(SetList::EARLY_RETURN);
+        $containerConfigurator->import(SetList::CODE_QUALITY);
+            $containerConfigurator->import(SetList::DEAD_CODE);
+                $containerConfigurator->import(SetList::PRIVATIZATION);
+                    $containerConfigurator->import(SetList::PSR_4);$containerConfigurator->import(SetList::TYPE_DECLARATION);
+                        $containerConfigurator->import(SetList::EARLY_RETURN);
 
     // PHP version
     $containerConfigurator->import(SetList::PHP_71);
     $containerConfigurator->import(SetList::PHP_72);
-    $containerConfigurator->import(SetList::PHP_73);
-    $containerConfigurator->import(SetList::PHP_74);
-    $containerConfigurator->import(SetList::PHP_80);
+
+    // Downgrade
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_72);
+    $containerConfigurator->import(DowngradeSetList::PHP_80);
+    $containerConfigurator->import(DowngradeSetList::PHP_74);
+    $containerConfigurator->import(DowngradeSetList::PHP_73);
 };
