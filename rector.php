@@ -11,11 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
-use Rector\CodingStyle\Rector\FuncCall\CallUserFuncArrayToVariadicRector;
 use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
+use Rector\CodingStyle\Rector\FuncCall\CallUserFuncArrayToVariadicRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector;
 use Rector\Set\ValueObject\DowngradeSetList;
 use Rector\Set\ValueObject\SetList;
@@ -35,18 +35,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::SKIP, [
         CallUserFuncArrayToVariadicRector::class,
         PrivatizeLocalGetterToPropertyRector::class,
-            RemoveUnusedPromotedPropertyRector::class,
+        RemoveUnusedPromotedPropertyRector::class,
         UnSpreadOperatorRector::class,
     ]);
 
     $services = $containerConfigurator->services();
 
     $containerConfigurator->import(SetList::CODING_STYLE);
-        $containerConfigurator->import(SetList::CODE_QUALITY);
-            $containerConfigurator->import(SetList::DEAD_CODE);
-                $containerConfigurator->import(SetList::PRIVATIZATION);
-                    $containerConfigurator->import(SetList::PSR_4);$containerConfigurator->import(SetList::TYPE_DECLARATION);
-                        $containerConfigurator->import(SetList::EARLY_RETURN);
+    $containerConfigurator->import(SetList::CODE_QUALITY);
+    $containerConfigurator->import(SetList::DEAD_CODE);
+    $containerConfigurator->import(SetList::PRIVATIZATION);
+    $containerConfigurator->import(SetList::PSR_4);
+    $containerConfigurator->import(SetList::TYPE_DECLARATION);
+    $containerConfigurator->import(SetList::EARLY_RETURN);
 
     // PHP version
     $containerConfigurator->import(SetList::PHP_71);
