@@ -60,6 +60,7 @@ final class Configurator
         'php_unit_test_class_requires_covers' => false,
         'phpdoc_add_missing_param_annotation' => false,
         'phpdoc_line_span' => true,
+        'phpdoc_to_comment' => false,
         'phpdoc_types_order' => [
             'sort_algorithm' => 'none',
             'null_adjustment' => 'always_last',
