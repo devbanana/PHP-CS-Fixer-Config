@@ -27,6 +27,16 @@
             "Devbanana\\FixerConfig\\": "src/"
         }
     },
+    "scripts": {
+        "build": [
+            "composer install",
+            "git checkout master src",
+            "rector process",
+            "php-cs-fixer fix",
+            "git add src",
+            "git commit -m 'Updated to '$(git rev-parse --short master)"
+        ]
+    },
     "config": {
         "sort-packages": true,
         "platform": {
