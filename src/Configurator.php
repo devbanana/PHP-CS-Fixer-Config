@@ -50,26 +50,11 @@ final class Configurator
                 'constant_public',
                 'constant_protected',
                 'constant_private',
-                'property_public_static',
                 'property_public',
-                'property_protected_static',
                 'property_protected',
-                'property_private_static',
                 'property_private',
                 'construct',
-                'destruct',
                 'phpunit',
-                'method_public_abstract_static',
-                'method_public_static',
-                'method_public_abstract',
-                'magic',
-                'method_public',
-                'method_protected_abstract_static',
-                'method_protected_static',
-                'method_protected_abstract',
-                'method_protected',
-                'method_private_static',
-                'method_private',
             ],
         ],
         'php_unit_test_class_requires_covers' => false,
@@ -217,19 +202,35 @@ final class Configurator
     public function withRiskyRulesEnabled(): self
     {
         if ($this->phpVersion->equals(PhpVersion::PHP_72())) {
-            return new self($this->rules + self::RISKY_RULES + self::PHP71_MIGRATION_RISKY, $this->phpVersion, true);
+            return new self(
+                $this->rules + self::RISKY_RULES + self::PHP71_MIGRATION_RISKY,
+                $this->phpVersion,
+                true
+            );
         }
 
         if ($this->phpVersion->equals(PhpVersion::PHP_73())) {
-            return new self($this->rules + self::RISKY_RULES + self::PHP73_MIGRATION_RISKY, $this->phpVersion, true);
+            return new self(
+                $this->rules + self::RISKY_RULES + self::PHP73_MIGRATION_RISKY,
+                $this->phpVersion,
+                true
+            );
         }
 
         if ($this->phpVersion->equals(PhpVersion::PHP_74())) {
-            return new self($this->rules + self::RISKY_RULES + self::PHP74_MIGRATION_RISKY, $this->phpVersion, true);
+            return new self(
+                $this->rules + self::RISKY_RULES + self::PHP74_MIGRATION_RISKY,
+                $this->phpVersion,
+                true
+            );
         }
 
         if ($this->phpVersion->equals(PhpVersion::PHP_80())) {
-            return new self($this->rules + self::RISKY_RULES + self::PHP80_MIGRATION_RISKY, $this->phpVersion, true);
+            return new self(
+                $this->rules + self::RISKY_RULES + self::PHP80_MIGRATION_RISKY,
+                $this->phpVersion,
+                true
+            );
         }
 
         throw new \InvalidArgumentException('Unexpected PHP version given');
