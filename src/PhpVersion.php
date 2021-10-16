@@ -26,14 +26,17 @@ final class PhpVersion extends Enum
      * @var string
      */
     private const PHP_72 = '7.2';
+
     /**
      * @var string
      */
     private const PHP_73 = '7.3';
+
     /**
      * @var string
      */
     private const PHP_74 = '7.4';
+
     /**
      * @var string
      */

@@ -89,6 +89,7 @@ final class Configurator
     private const PHP71_MIGRATION = [
         '@PHP71Migration' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
@@ -102,6 +103,7 @@ final class Configurator
     private const PHP73_MIGRATION = [
         '@PHP73Migration' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
@@ -115,12 +117,14 @@ final class Configurator
     private const PHP74_MIGRATION = [
         '@PHP74Migration' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
     private const PHP74_MIGRATION_RISKY = [
         '@PHP74Migration:risky' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
@@ -134,6 +138,7 @@ final class Configurator
     private const PHP80_MIGRATION = [
         '@PHP80Migration' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
