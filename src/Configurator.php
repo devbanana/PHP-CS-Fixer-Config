@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Devbanana\FixerConfig;
 
-use JetBrains\PhpStorm\Pure;
 use PhpCsFixer\Config;
 
 final class Configurator
@@ -145,18 +144,21 @@ final class Configurator
     private const PHP80_MIGRATION_RISKY = [
         '@PHP80Migration:risky' => true,
     ];
+
     /**
-     * @var mixed[]
+     * @var array
      */
-    private $rules = [];
+    private $rules;
+
     /**
-     * @var \Devbanana\FixerConfig\PhpVersion
+     * @var PhpVersion
      */
     private $phpVersion;
+
     /**
      * @var bool
      */
-    private $risky = false;
+    private $risky;
 
     private function __construct(array $rules, PhpVersion $phpVersion, bool $risky = false)
     {
@@ -165,6 +167,9 @@ final class Configurator
         $this->risky = $risky;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function fromPhpVersion(PhpVersion $phpVersion): self
     {
         if ($phpVersion->equals(PhpVersion::PHP_72())) {
@@ -187,13 +192,16 @@ final class Configurator
     }
 
     /**
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function withAddedRules(array $rules): self
     {
         return new self($rules + $this->rules, $this->phpVersion, $this->risky);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function withRiskyRulesEnabled(): self
     {
         if ($this->phpVersion->equals(PhpVersion::PHP_72())) {
@@ -232,7 +240,7 @@ final class Configurator
     }
 
     /**
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function withRiskyRulesDisabled(): self
     {
