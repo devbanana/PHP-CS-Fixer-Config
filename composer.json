@@ -29,7 +29,7 @@
             "composer install",
             "git checkout master src",
             "rector process",
-            "php-cs-fixer fix",
+            "php-cs-fixer fix --diff",
             "git add src",
             "git commit -m 'Updated to '$(git rev-parse --short master)"
         ]
