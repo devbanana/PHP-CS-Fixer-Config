@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Devbanana\FixerConfig;
 
+use JetBrains\PhpStorm\Pure;
 use PhpCsFixer\Config;
 
 final class Configurator
@@ -70,9 +71,6 @@ final class Configurator
         'yoda_style' => false,
     ];
 
-    /**
-     * @var array<string, bool|mixed[]>
-     */
     private const RISKY_RULES = [
         '@PhpCsFixer:risky' => true,
         '@PHPUnit84Migration:risky' => true,
@@ -91,6 +89,7 @@ final class Configurator
     private const PHP71_MIGRATION = [
         '@PHP71Migration' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
@@ -104,12 +103,7 @@ final class Configurator
     private const PHP73_MIGRATION = [
         '@PHP73Migration' => true,
     ];
-    /**
-     * @var array<string, bool>
-     */
-    private const PHP73_MIGRATION_RISKY = [
-        '@PHP73Migration:risky' => true,
-    ];
+
     /**
      * @var array<string, bool>
      */
@@ -123,12 +117,14 @@ final class Configurator
     private const PHP74_MIGRATION = [
         '@PHP74Migration' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
     private const PHP74_MIGRATION_RISKY = [
         '@PHP74Migration:risky' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
@@ -142,6 +138,7 @@ final class Configurator
     private const PHP80_MIGRATION = [
         '@PHP80Migration' => true,
     ];
+
     /**
      * @var array<string, bool>
      */
@@ -149,7 +146,7 @@ final class Configurator
         '@PHP80Migration:risky' => true,
     ];
     /**
-     * @var mixed[][]|bool[]
+     * @var mixed[]
      */
     private $rules = [];
     /**
@@ -161,9 +158,6 @@ final class Configurator
      */
     private $risky = false;
 
-    /**
-     * @param array<string, bool|mixed[]> $rules
-     */
     private function __construct(array $rules, PhpVersion $phpVersion, bool $risky = false)
     {
         $this->rules = $rules;
@@ -193,7 +187,7 @@ final class Configurator
     }
 
     /**
-     * @param array<string, bool|mixed[]> $rules
+     * @psalm-pure
      */
     public function withAddedRules(array $rules): self
     {
@@ -212,7 +206,7 @@ final class Configurator
 
         if ($this->phpVersion->equals(PhpVersion::PHP_73())) {
             return new self(
-                $this->rules + self::RISKY_RULES + self::PHP73_MIGRATION_RISKY,
+                $this->rules + self::RISKY_RULES + self::PHP71_MIGRATION_RISKY,
                 $this->phpVersion,
                 true
             );
@@ -237,6 +231,9 @@ final class Configurator
         throw new \InvalidArgumentException('Unexpected PHP version given');
     }
 
+    /**
+     * @psalm-pure
+     */
     public function withRiskyRulesDisabled(): self
     {
         return new self(
@@ -244,7 +241,6 @@ final class Configurator
                 $this->rules,
                 self::RISKY_RULES,
                 self::PHP71_MIGRATION_RISKY,
-                self::PHP73_MIGRATION_RISKY,
                 self::PHP74_MIGRATION_RISKY,
                 self::PHP80_MIGRATION_RISKY
             ),
@@ -255,13 +251,14 @@ final class Configurator
 
     public function fixerConfig(): Config
     {
-        ksort($this->rules);
+        $rules = $this->rules;
+        ksort($rules);
 
         $config = new Config();
         $config
             ->setIndent('    ')
             ->setLineEnding("\n")
-            ->setRules($this->rules)
+            ->setRules($rules)
             ;
 
         if ($this->risky) {

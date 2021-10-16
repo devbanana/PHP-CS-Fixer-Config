@@ -13,32 +13,52 @@ declare(strict_types=1);
 
 namespace Devbanana\FixerConfig;
 
+use JetBrains\PhpStorm\Immutable;
 use MyCLabs\Enum\Enum;
 
 /**
- * @method static PhpVersion PHP_72()
- * @method static PhpVersion PHP_73()
- * @method static PhpVersion PHP_74()
- * @method static PhpVersion PHP_80()
- *
  * @extends Enum<string>
  */
+#[Immutable]
 final class PhpVersion extends Enum
 {
     /**
      * @var string
      */
     private const PHP_72 = '7.2';
+
     /**
      * @var string
      */
     private const PHP_73 = '7.3';
+
     /**
      * @var string
      */
     private const PHP_74 = '7.4';
+
     /**
      * @var string
      */
     private const PHP_80 = '8.0';
+
+    public static function PHP_72(): self
+    {
+        return new self(self::PHP_72);
+    }
+
+    public static function PHP_73(): self
+    {
+        return new self(self::PHP_73);
+    }
+
+    public static function PHP_74(): self
+    {
+        return new self(self::PHP_74);
+    }
+
+    public static function PHP_80(): self
+    {
+        return new self(self::PHP_80);
+    }
 }
