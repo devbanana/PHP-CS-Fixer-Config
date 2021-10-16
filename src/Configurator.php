@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Devbanana\FixerConfig;
 
+use JetBrains\PhpStorm\Pure;
 use PhpCsFixer\Config;
 
 final class Configurator
@@ -70,9 +71,6 @@ final class Configurator
         'yoda_style' => false,
     ];
 
-    /**
-     * @var array<string, bool|mixed[]>
-     */
     private const RISKY_RULES = [
         '@PhpCsFixer:risky' => true,
         '@PHPUnit84Migration:risky' => true,
@@ -103,12 +101,6 @@ final class Configurator
      */
     private const PHP73_MIGRATION = [
         '@PHP73Migration' => true,
-    ];
-    /**
-     * @var array<string, bool>
-     */
-    private const PHP73_MIGRATION_RISKY = [
-        '@PHP73Migration:risky' => true,
     ];
     /**
      * @var array<string, bool>
@@ -149,9 +141,6 @@ final class Configurator
         '@PHP80Migration:risky' => true,
     ];
 
-    /**
-     * @param array<string, bool|mixed[]> $rules
-     */
     private function __construct(
         private array $rules,
         private PhpVersion $phpVersion,
@@ -180,9 +169,7 @@ final class Configurator
         throw new \InvalidArgumentException('Unexpected PHP version given');
     }
 
-    /**
-     * @param array<string, bool|mixed[]> $rules
-     */
+    #[Pure]
     public function withAddedRules(array $rules): self
     {
         return new self($rules + $this->rules, $this->phpVersion, $this->risky);
@@ -200,7 +187,7 @@ final class Configurator
 
         if ($this->phpVersion->equals(PhpVersion::PHP_73())) {
             return new self(
-                $this->rules + self::RISKY_RULES + self::PHP73_MIGRATION_RISKY,
+                $this->rules + self::RISKY_RULES + self::PHP71_MIGRATION_RISKY,
                 $this->phpVersion,
                 risky: true
             );
@@ -225,6 +212,7 @@ final class Configurator
         throw new \InvalidArgumentException('Unexpected PHP version given');
     }
 
+    #[Pure]
     public function withRiskyRulesDisabled(): self
     {
         return new self(
@@ -232,7 +220,6 @@ final class Configurator
                 $this->rules,
                 self::RISKY_RULES,
                 self::PHP71_MIGRATION_RISKY,
-                self::PHP73_MIGRATION_RISKY,
                 self::PHP74_MIGRATION_RISKY,
                 self::PHP80_MIGRATION_RISKY
             ),
@@ -243,13 +230,14 @@ final class Configurator
 
     public function fixerConfig(): Config
     {
-        ksort($this->rules);
+        $rules = $this->rules;
+        ksort($rules);
 
         $config = new Config();
         $config
             ->setIndent('    ')
             ->setLineEnding("\n")
-            ->setRules($this->rules)
+            ->setRules($rules)
             ;
 
         if ($this->risky) {
