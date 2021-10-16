@@ -16,10 +16,13 @@ use Rector\CodingStyle\Rector\FuncCall\CallUserFuncArrayToVariadicRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
+use Rector\DowngradePhp80\Rector\Class_\DowngradeAttributeToAnnotationRector;
+use Rector\DowngradePhp80\ValueObject\DowngradeAttributeToAnnotation;
 use Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector;
 use Rector\Set\ValueObject\DowngradeSetList;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symplify\SymfonyPhpConfig\ValueObjectInliner;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // get parameters
@@ -59,10 +62,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(DowngradeSetList::PHP_74);
     $containerConfigurator->import(DowngradeSetList::PHP_73);
 
-    $services->set(\Rector\DowngradePhp80\Rector\Class_\DowngradeAttributeToAnnotationRector::class)
+    $services->set(DowngradeAttributeToAnnotationRector::class)
         ->call('configure', [[
-            \Rector\DowngradePhp80\Rector\Class_\DowngradeAttributeToAnnotationRector::ATTRIBUTE_TO_ANNOTATION => \Symplify\SymfonyPhpConfig\ValueObjectInliner::inline([
-                new \Rector\DowngradePhp80\ValueObject\DowngradeAttributeToAnnotation('JetBrains\PhpStorm\Pure', 'psalm-pure'),
-            ])
-        ]]);
+            DowngradeAttributeToAnnotationRector::ATTRIBUTE_TO_ANNOTATION => ValueObjectInliner::inline([
+                new DowngradeAttributeToAnnotation('JetBrains\PhpStorm\Pure', 'psalm-pure'),
+            ]),
+        ]])
+    ;
 };
