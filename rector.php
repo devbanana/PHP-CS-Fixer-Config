@@ -58,4 +58,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(DowngradeSetList::PHP_80);
     $containerConfigurator->import(DowngradeSetList::PHP_74);
     $containerConfigurator->import(DowngradeSetList::PHP_73);
+
+    $services->set(\Rector\DowngradePhp80\Rector\Class_\DowngradeAttributeToAnnotationRector::class)
+        ->call('configure', [[
+            \Rector\DowngradePhp80\Rector\Class_\DowngradeAttributeToAnnotationRector::ATTRIBUTE_TO_ANNOTATION => \Symplify\SymfonyPhpConfig\ValueObjectInliner::inline([
+                new \Rector\DowngradePhp80\ValueObject\DowngradeAttributeToAnnotation('JetBrains\PhpStorm\Pure', 'psalm-pure'),
+            ])
+        ]]);
 };
