@@ -36,6 +36,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::IMPORT_DOC_BLOCKS, true);
 
     $parameters->set(Option::SKIP, [
+        \Rector\CodingStyle\Rector\Class_\AddArrayDefaultToArrayPropertyRector::class,
         CallUserFuncArrayToVariadicRector::class,
         PrivatizeLocalGetterToPropertyRector::class,
         RemoveUnusedPromotedPropertyRector::class,
