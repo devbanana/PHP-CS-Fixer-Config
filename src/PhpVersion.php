@@ -42,21 +42,33 @@ final class PhpVersion extends Enum
      */
     private const PHP_80 = '8.0';
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function PHP_72(): self
     {
         return new self(self::PHP_72);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function PHP_73(): self
     {
         return new self(self::PHP_73);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function PHP_74(): self
     {
         return new self(self::PHP_74);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function PHP_80(): self
     {
         return new self(self::PHP_80);

@@ -153,6 +153,9 @@ final class Configurator
     ) {
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public static function fromPhpVersion(PhpVersion $phpVersion): self
     {
         if ($phpVersion->equals(PhpVersion::PHP_72())) {
@@ -174,12 +177,18 @@ final class Configurator
         throw new \InvalidArgumentException('Unexpected PHP version given');
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     #[Pure]
     public function withAddedRules(array $rules): self
     {
         return new self($rules + $this->rules, $this->phpVersion, $this->risky);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function withRiskyRulesEnabled(): self
     {
         if ($this->phpVersion->equals(PhpVersion::PHP_72())) {
@@ -217,6 +226,9 @@ final class Configurator
         throw new \InvalidArgumentException('Unexpected PHP version given');
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     #[Pure]
     public function withRiskyRulesDisabled(): self
     {
