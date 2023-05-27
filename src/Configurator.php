@@ -146,6 +146,13 @@ final class Configurator
         '@PHP80Migration:risky' => true,
     ];
 
+    /**
+     * @var array<string, bool>
+     */
+    private const PHP81_MIGRATION = [
+        '@PHP81Migration' => true,
+    ];
+
     private function __construct(
         private array $rules,
         private PhpVersion $phpVersion,
@@ -158,20 +165,24 @@ final class Configurator
      */
     public static function fromPhpVersion(PhpVersion $phpVersion): self
     {
-        if ($phpVersion->equals(PhpVersion::PHP_72())) {
+        if ($phpVersion === PhpVersion::php72) {
             return new self(self::RULES + self::PHP71_MIGRATION, $phpVersion);
         }
 
-        if ($phpVersion->equals(PhpVersion::PHP_73())) {
+        if ($phpVersion === PhpVersion::php73) {
             return new self(self::RULES + self::PHP73_MIGRATION + self::PHP73_RULES, $phpVersion);
         }
 
-        if ($phpVersion->equals(PhpVersion::PHP_74())) {
+        if ($phpVersion === PhpVersion::php74) {
             return new self(self::RULES + self::PHP74_MIGRATION + self::PHP74_RULES, $phpVersion);
         }
 
-        if ($phpVersion->equals(PhpVersion::PHP_80())) {
-            return new self(self::RULES + self::PHP80_MIGRATION, $phpVersion);
+        if ($phpVersion === PhpVersion::php80) {
+            return new self(self::RULES + self::PHP80_MIGRATION + self::PHP74_RULES, $phpVersion);
+        }
+
+        if ($phpVersion === PhpVersion::php81) {
+            return new self(self::RULES + self::PHP81_MIGRATION + self::PHP74_RULES, $phpVersion);
         }
 
         throw new \InvalidArgumentException('Unexpected PHP version given');
@@ -191,7 +202,7 @@ final class Configurator
      */
     public function withRiskyRulesEnabled(): self
     {
-        if ($this->phpVersion->equals(PhpVersion::PHP_72())) {
+        if ($this->phpVersion === PhpVersion::php72) {
             return new self(
                 $this->rules + self::RISKY_RULES + self::PHP71_MIGRATION_RISKY,
                 $this->phpVersion,
@@ -199,7 +210,7 @@ final class Configurator
             );
         }
 
-        if ($this->phpVersion->equals(PhpVersion::PHP_73())) {
+        if ($this->phpVersion === PhpVersion::php73) {
             return new self(
                 $this->rules + self::RISKY_RULES + self::PHP71_MIGRATION_RISKY,
                 $this->phpVersion,
@@ -207,7 +218,7 @@ final class Configurator
             );
         }
 
-        if ($this->phpVersion->equals(PhpVersion::PHP_74())) {
+        if ($this->phpVersion === PhpVersion::php74) {
             return new self(
                 $this->rules + self::RISKY_RULES + self::PHP74_MIGRATION_RISKY,
                 $this->phpVersion,
@@ -215,7 +226,15 @@ final class Configurator
             );
         }
 
-        if ($this->phpVersion->equals(PhpVersion::PHP_80())) {
+        if ($this->phpVersion === PhpVersion::php80) {
+            return new self(
+                $this->rules + self::RISKY_RULES + self::PHP80_MIGRATION_RISKY,
+                $this->phpVersion,
+                risky: true
+            );
+        }
+
+        if ($this->phpVersion === PhpVersion::php81) {
             return new self(
                 $this->rules + self::RISKY_RULES + self::PHP80_MIGRATION_RISKY,
                 $this->phpVersion,

@@ -13,64 +13,15 @@ declare(strict_types=1);
 
 namespace Devbanana\FixerConfig;
 
-use JetBrains\PhpStorm\Immutable;
-use MyCLabs\Enum\Enum;
-
-/**
- * @extends Enum<string>
- */
-#[Immutable]
-final class PhpVersion extends Enum
+enum PhpVersion
 {
-    /**
-     * @var string
-     */
-    private const PHP_72 = '7.2';
+    case php72;
 
-    /**
-     * @var string
-     */
-    private const PHP_73 = '7.3';
+    case php73;
 
-    /**
-     * @var string
-     */
-    private const PHP_74 = '7.4';
+    case php74;
 
-    /**
-     * @var string
-     */
-    private const PHP_80 = '8.0';
+    case php80;
 
-    /**
-     * @psalm-mutation-free
-     */
-    public static function PHP_72(): self
-    {
-        return new self(self::PHP_72);
-    }
-
-    /**
-     * @psalm-mutation-free
-     */
-    public static function PHP_73(): self
-    {
-        return new self(self::PHP_73);
-    }
-
-    /**
-     * @psalm-mutation-free
-     */
-    public static function PHP_74(): self
-    {
-        return new self(self::PHP_74);
-    }
-
-    /**
-     * @psalm-mutation-free
-     */
-    public static function PHP_80(): self
-    {
-        return new self(self::PHP_80);
-    }
+    case php81;
 }

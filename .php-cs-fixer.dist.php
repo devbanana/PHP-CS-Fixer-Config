@@ -31,7 +31,7 @@ $header = <<<'EOF'
     file that was distributed with this source code.
     EOF;
 
-return Configurator::fromPhpVersion(PhpVersion::PHP_80())
+return Configurator::fromPhpVersion(PhpVersion::php81)
     ->withRiskyRulesEnabled()
     ->withAddedRules([
         'header_comment' => [
